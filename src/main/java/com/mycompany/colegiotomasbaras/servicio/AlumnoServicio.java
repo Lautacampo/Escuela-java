@@ -41,7 +41,6 @@ public class AlumnoServicio {
     }
     
     //CU : registrar alumno
-    
     @Transactional //envuelve tood el metodosi algo falla hace deshace todo, solo guarda los que pasaron sin errores
     public Alumno registarAlumno(Alumno nuevoAlumno){
         if(alumnoRepo.existByDni(nuevoAlumno.getDni())){
@@ -50,4 +49,22 @@ public class AlumnoServicio {
         return alumnoRepo.save(nuevoAlumno);
     }
     
+    //CU : matricular alumno , busca alumno, curso y modulo y crea la relacion en CURSADAMODULO
+    @Transactional
+    public CursadaModulo matriculaAlumno(long idAlumno, long idCurso, long idModulo){
+        Alumno alumno = alumnoRepo.findById(idAlumno)
+                .orElseThrow(()-> new RuntimeException("Alumno no encontrado"));
+        
+        Curso curso = cursoRepo.findById(idCurso)        
+                .orElseThrow(()->new RuntimeException("Curso no encontrad"));
+                
+        Modulo modulo = moduloRepo.findById(idModulo)
+                .orElseThrow(()->new RuntimeException("Modulo no encontrado"));
+        
+                
+        
+                
+    }
+    
 }
+    
