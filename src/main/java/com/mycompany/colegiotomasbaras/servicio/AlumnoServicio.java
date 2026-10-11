@@ -40,5 +40,14 @@ public class AlumnoServicio {
         return alumnoRepo.findAll();
     }
     
+    //CU : registrar alumno
+    
+    @Transactional //envuelve tood el metodosi algo falla hace deshace todo, solo guarda los que pasaron sin errores
+    public Alumno registarAlumno(Alumno nuevoAlumno){
+        if(alumnoRepo.existByDni(nuevoAlumno.getDni())){
+            throw new RuntimeException("Ya existe un alumno registrado con el DNI :"+ nuevoAlumno.getDni());
+        }
+        return alumnoRepo.save(nuevoAlumno);
+    }
     
 }
