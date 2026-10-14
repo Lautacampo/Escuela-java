@@ -56,11 +56,11 @@ public class Docente extends Personal {
         this.materias = materias;
     }
 
-    public List<Curso> getAulas() {
+    public List<Curso> getCursos() {
         return cursos;
     }
 
-    public void setAulas(List<Curso> cursos) {
+    public void setCursos(List<Curso> cursos) {
         this.cursos = cursos;
     }
 }

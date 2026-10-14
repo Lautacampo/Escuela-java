@@ -42,7 +42,7 @@ public class Curso {
 
     // Asociacion con Docente
 
-    @ManyToMany(mappedBy = "aulas")
+    @ManyToMany(mappedBy = "cursos")
     private List<Docente> docentes = new ArrayList<>();
 
     // Asociacion con Modulo
