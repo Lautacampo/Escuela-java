@@ -38,8 +38,7 @@ public class Alumno extends Persona {
     // Asociacion con CursadaModulo
 
     @OneToMany(mappedBy = "alumno")
-    private List<CursadoModulo> cursadas =
-            new ArrayList<>();
+    private List<CursadoModulo> cursadas = new ArrayList<>();
 
     // Constructor
 

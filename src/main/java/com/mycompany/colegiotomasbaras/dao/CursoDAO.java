@@ -6,11 +6,12 @@ package com.mycompany.colegiotomasbaras.dao;
 
 import com.mycompany.colegiotomasbaras.modelo.academico.Curso;
 import java.util.Optional;
-
+import java.util.List;
 /**
  *
  * @author Maximo Gallardo
  */
 public interface CursoDAO {
     Optional<Curso> buscarPorId(Long id);
+    List<Curso>obtenerTodosconModulos();
 }

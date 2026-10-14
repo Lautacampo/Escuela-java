@@ -4,7 +4,8 @@ package com.mycompany.colegiotomasbaras.controlador;
 import com.mycompany.colegiotomasbaras.modelo.personas.Alumno;
 import com.mycompany.colegiotomasbaras.servicio.AlumnoServicio;
 import com.mycompany.colegiotomasbaras.dto.ResultadoMatricula;
-
+import com.mycompany.colegiotomasbaras.dto.MatriculaDTO;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,20 +76,18 @@ public class AlumnoControlador {
 
     // CASO DE USO: MATRICULAR ALUMNO
 
+    // CASO DE USO: MATRICULAR ALUMNO
     @PostMapping("/{idAlumno}/matricular")
     public ResponseEntity<ResultadoMatricula> matricularAlumno(
             @PathVariable Long idAlumno,
-            @RequestParam Long idAula,
-            @RequestParam Long idModulo,
-            @RequestParam(defaultValue = "false")
-                boolean autorizarConAdvertencias) {
+            @RequestBody MatriculaDTO dto) {
 
         ResultadoMatricula resultado =
                 alumnoService.matricularAlumno(
                         idAlumno,
-                        idAula,
-                        idModulo,
-                        autorizarConAdvertencias
+                        dto.getIdCurso(),
+                        dto.getIdModulo(),
+                        dto.isAutorizarConAdvertencias()
                 );
 
         HttpStatus estado = resultado.registrada()

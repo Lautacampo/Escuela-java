@@ -73,4 +73,16 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 
         return cantidad > 0;
     }
+    
+    @Override
+    public List<Alumno> obtenerTodos() {
+
+        String jpql = "SELECT DISTINCT a FROM Alumno a " +
+                      "LEFT JOIN FETCH a.cursadas cm " +
+                      "LEFT JOIN FETCH cm.curso c " +
+                      "LEFT JOIN FETCH cm.modulo m";
+        
+        return entityManager.createQuery(jpql, Alumno.class).getResultList();
+    }
+    
 }

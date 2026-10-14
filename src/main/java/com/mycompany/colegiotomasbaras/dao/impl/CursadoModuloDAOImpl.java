@@ -49,7 +49,7 @@ public class CursadoModuloDAOImpl
             Long idAlumno) {
 
         return entityManager.createQuery(
-                "SELECT c FROM CursadaModulo c "
+                "SELECT c FROM CursadoModulo c "
                 + "JOIN FETCH c.modulo "
                 + "WHERE c.alumno.id = :idAlumno",
                 CursadoModulo.class
@@ -68,9 +68,9 @@ public class CursadoModuloDAOImpl
             Long idModulo) {
 
         Long cantidad = entityManager.createQuery(
-                "SELECT COUNT(c) FROM CursadaModulo c "
+                "SELECT COUNT(c) FROM CursadoModulo c "
                 + "WHERE c.alumno.id = :idAlumno "
-                + "AND c.curso.id = :idCurso"
+                + "AND c.curso.id = :idCurso "
                 + "AND c.modulo.id = :idModulo",
                 Long.class
         )

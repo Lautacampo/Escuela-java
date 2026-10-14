@@ -98,7 +98,7 @@ public class AlumnoServicio {
     @Transactional
     public ResultadoMatricula matricularAlumno(
             Long idAlumno,
-            Long idAula,
+            Long idCurso,
             Long idModulo,
             boolean autorizarConAdvertencias) {
 
@@ -114,11 +114,11 @@ public class AlumnoServicio {
 
         // 2. Buscar el aula utilizando DAO.
 
-        Curso curso = cursoDAO.buscarPorId(idAula)
+        Curso curso = cursoDAO.buscarPorId(idCurso)
                 .orElseThrow(() ->
                     new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                        "Aula no encontrada"
+                        "Curso no encontrada"
                     )
                 );
 
@@ -149,7 +149,7 @@ public class AlumnoServicio {
         // 5. Comprobar matricula duplicada.
 
         if (cursadaDAO.existeMatricula(
-                idAlumno, idAula, idModulo)) {
+                idAlumno, idCurso, idModulo)) {
 
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
@@ -205,7 +205,7 @@ public class AlumnoServicio {
         CursadoModulo cursada = new CursadoModulo();
 
         cursada.setAlumno(alumno);
-        cursada.setAula(curso);
+        cursada.setCurso(curso);
         cursada.setModulo(modulo);
 
         cursada.setCondicion(

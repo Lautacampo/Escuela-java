@@ -9,6 +9,7 @@ import com.mycompany.colegiotomasbaras.modelo.evaluacion.EvaluacionModulo;
 import com.mycompany.colegiotomasbaras.modelo.evaluacion.Calificacion;
 import com.mycompany.colegiotomasbaras.modelo.enums.CondicionAsistencia;
 import com.mycompany.colegiotomasbaras.modelo.enums.EstadoAcademico;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class CursadoModulo {
     private CondicionAsistencia condicion =
             CondicionAsistencia.REGULAR;
 
-    @Column(name = "cant_faltas_acumuladas",
+    @Column(name = "cantidad_faltas_acumuladas",
             nullable = false)
     private Double cantFaltasAcumuladas = 0.0;
 
@@ -43,13 +44,13 @@ public class CursadoModulo {
             EstadoAcademico.EN_CURSO;
 
     // Asociacion con Alumno
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "alumno_id", nullable = false)
     private Alumno alumno;
 
-    // Asociacion con Aula
-
+    // Asociacion con Curso
+    
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
@@ -60,28 +61,25 @@ public class CursadoModulo {
     private Modulo modulo;
 
     // Composicion con Asistencia
-
+    @JsonIgnore
     @OneToMany(
         mappedBy = "cursadaModulo",
         cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
-    private List<Asistencia> asistencias =
-            new ArrayList<>();
+    private List<Asistencia> asistencias = new ArrayList<>();
 
     // Composicion con EvaluacionModulo
-
+    @JsonIgnore
     @OneToMany(
         mappedBy = "cursadaModulo",
         cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
-    private List<EvaluacionModulo> evaluaciones =
-            new ArrayList<>();
+    private List<EvaluacionModulo> evaluaciones =new ArrayList<>();
 
     // Asociacion con Calificacion
-
+    @JsonIgnore
     @OneToMany(mappedBy = "cursadaModulo")
-    private List<Calificacion> calificaciones =
-            new ArrayList<>();
+    private List<Calificacion> calificaciones =new ArrayList<>();
 
 
     public CursadoModulo() {
@@ -132,7 +130,7 @@ public class CursadoModulo {
         return curso;
     }
 
-    public void setAula(Curso curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 

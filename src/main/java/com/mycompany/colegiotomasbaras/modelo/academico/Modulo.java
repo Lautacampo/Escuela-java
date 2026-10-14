@@ -6,6 +6,7 @@ package com.mycompany.colegiotomasbaras.modelo.academico;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -25,10 +26,10 @@ public class Modulo {
     private String numeroLeyenda;
 
     // Asociacion con Materia
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "modulo_materia",
+        name = "materia_modulo",
         joinColumns =
             @JoinColumn(name = "modulo_id"),
         inverseJoinColumns =
@@ -38,28 +39,29 @@ public class Modulo {
 
     // Asociacion con Curso
 
+    @JsonIgnore // evita bucle
     @ManyToMany(mappedBy = "modulos")
     private List<Curso> cursos = new ArrayList<>();
 
     // Asociacion con CursadaModulo
-
+    @JsonIgnore
     @OneToMany(mappedBy = "modulo")
-    private List<CursadoModulo> cursadas =
-            new ArrayList<>();
+    private List<CursadoModulo> cursadas = new ArrayList<>();
 
     // Autoasociacion: correlatividades
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "modulo_correlatividad",
+        name = "modulo_correlativo",
         joinColumns =
             @JoinColumn(name = "modulo_id"),
         inverseJoinColumns =
-            @JoinColumn(name = "prerrequisito_id")
+            @JoinColumn(name = "modulo_correlativo_id")
     )
     private List<Modulo> prerrequisitos =
             new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "prerrequisitos")
     private List<Modulo> modulosPosteriores =new ArrayList<>();
 

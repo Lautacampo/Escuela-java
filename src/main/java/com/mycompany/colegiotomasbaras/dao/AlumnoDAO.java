@@ -20,5 +20,8 @@ public interface AlumnoDAO {
     List<Alumno> listarTodos();
 
     boolean existePorDni(String dni);
+    
+    List<Alumno> obtenerTodos();
+    
 
 }

@@ -5,11 +5,10 @@
 package com.mycompany.colegiotomasbaras.modelo.academico;
 import com.mycompany.colegiotomasbaras.modelo.personas.Docente;
 import com.mycompany.colegiotomasbaras.modelo.personas.Preceptor;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  *
  * @author Maximo Gallardo
@@ -29,19 +28,19 @@ public class Curso {
     private Integer anioCurso;
 
     // Asociacion con CicloLectivo
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ciclo_lectivo_id", nullable = false)
     private CicloLectivo cicloLectivo;
 
     // Asociacion con Preceptor
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "preceptor_id", nullable = false)
     private Preceptor preceptor;
 
     // Asociacion con Docente
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "cursos")
     private List<Docente> docentes = new ArrayList<>();
 
@@ -49,15 +48,15 @@ public class Curso {
 
     @ManyToMany
     @JoinTable(
-        name = "aula_modulo",
-        joinColumns = @JoinColumn(name = "aula_id"),
+        name = "curso_modulo",
+        joinColumns = @JoinColumn(name = "curso_id"),
         inverseJoinColumns = @JoinColumn(name = "modulo_id")
     )
     private List<Modulo> modulos = new ArrayList<>();
 
     // Asociacion con CursadaModulo
   
-
+    @JsonIgnore
     @OneToMany(mappedBy = "curso")
     private List<CursadoModulo> cursadas = new ArrayList<>();
 
