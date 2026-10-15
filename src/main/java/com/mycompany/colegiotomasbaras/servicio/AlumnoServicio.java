@@ -19,6 +19,7 @@ import com.mycompany.colegiotomasbaras.modelo.enums.EstadoAcademico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -94,6 +95,15 @@ public class AlumnoServicio {
     }
 
     // CASO DE USO: MATRICULAR ALUMNO
+
+    @Transactional(readOnly=true)
+    public List<Alumno> listarAlumnosConCursada() {
+    return alumnoDAO.obtenerTodos().stream()
+            .sorted(Comparator.comparing(Alumno::getApellido)
+                    .thenComparing(Alumno::getNombre))
+            .toList();
+    }
+    
 
     @Transactional
     public ResultadoMatricula matricularAlumno(
