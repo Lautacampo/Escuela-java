@@ -1,4 +1,3 @@
-
 package com.mycompany.colegiotomasbaras.servicio;
 
 
@@ -26,6 +25,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+
+import com.mycompany.colegiotomasbaras.dto.FichaAlumnoDTO;
+import com.mycompany.colegiotomasbaras.modelo.evaluacion.EvaluacionModulo;
+
+import java.util.Collections;
 
 @Service
 public class AlumnoServicio {
@@ -244,5 +248,130 @@ public class AlumnoServicio {
     }
     
 
-    
+    //CASO DE USO : CONSULTAR TRAYECTORIA ACADEMICA ALUMNOS
+@Transactional(readOnly = true)
+public FichaAlumnoDTO consultarAlumno(Long idAlumno) {
+
+    if (idAlumno == null || idAlumno <= 0) {
+        throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "El ID del alumno no es válido"
+        );
+    }
+
+    Alumno alumno = alumnoDAO.buscarPorId(idAlumno)
+            .orElseThrow(() ->
+                new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Alumno no encontrado"
+                )
+            );
+
+    List<CursadoModulo> cursadas =
+            new ArrayList<>(alumno.getCursadas());
+
+    cursadas.sort(Comparator.comparing(CursadoModulo::getId));
+
+    CursadoModulo actual = cursadas.stream()
+            .filter(c ->
+                c.getEstadoAcademico()
+                        == EstadoAcademico.EN_CURSO
+            )
+            .max(Comparator.comparing(CursadoModulo::getId))
+            .orElse(null);
+
+    List<FichaAlumnoDTO.Cursada> trayectoria =
+            cursadas.stream().map(c -> {
+
+        List<FichaAlumnoDTO.Evaluacion> evaluaciones =
+                c.getEvaluaciones().stream()
+                .sorted(Comparator.comparing(
+                        EvaluacionModulo::getNroInstancia
+                ))
+                .map(e -> new FichaAlumnoDTO.Evaluacion(
+                        e.getNroInstancia(),
+                        e.getFecha(),
+                        e.getNota(),
+                        e.getTipoInstancia().name()
+                ))
+                .toList();
+
+        Double ultimaNota = evaluaciones.isEmpty()
+                ? null
+                : evaluaciones.get(
+                        evaluaciones.size() - 1
+                ).nota();
+
+        List<FichaAlumnoDTO.MateriaEstado> materias =
+                c.getCalificaciones().stream()
+                .map(cal -> new FichaAlumnoDTO.MateriaEstado(
+                        cal.getMateria().getId(),
+                        cal.getMateria().getNombre(),
+                        cal.getEstado()
+                ))
+                .toList();
+
+        List<FichaAlumnoDTO.AsistenciaRegistro> asistencias =
+                c.getAsistencias().stream()
+                .map(a -> new FichaAlumnoDTO.AsistenciaRegistro(
+                        a.getFecha(),
+                        a.getValorFalta()
+                ))
+                .toList();
+
+        return new FichaAlumnoDTO.Cursada(
+                c.getId(),
+                c.getCurso().getAnioCurso(),
+                c.getCurso().getCicloLectivo().getAnio(),
+                c.getCurso().getDivision(),
+                c.getModulo().getNumeroLeyenda(),
+                c.getEstadoAcademico().name(),
+                c.getCantFaltasAcumuladas(),
+                c.getCondicion().name(),
+                ultimaNota,
+                evaluaciones,
+                materias,
+                asistencias
+        );
+    }).toList();
+
+    return new FichaAlumnoDTO(
+            alumno.getId(),
+            alumno.getNombre(),
+            alumno.getApellido(),
+            alumno.getDni(),
+            alumno.getCuil(),
+            alumno.getFechaNacimiento(),
+            alumno.getEdad(),
+            alumno.getLugarNacimiento(),
+            alumno.getDomicilio(),
+            alumno.getTelefono(),
+            alumno.getEmail(),
+            alumno.getTelefonoEmergencia(),
+            alumno.getCantidadHijos(),
+            alumno.getTrabaja(),
+
+            actual != null ? actual.getId() : null,
+            actual != null
+                    ? String.valueOf(
+                        actual.getCurso().getAnioCurso()
+                    )
+                    : null,
+            actual != null
+                    ? actual.getCurso().getDivision()
+                    : null,
+            actual != null
+                    ? actual.getModulo().getNumeroLeyenda()
+                    : null,
+            actual != null
+                    ? actual.getCantFaltasAcumuladas()
+                    : null,
+            actual != null
+                    ? actual.getCondicion().name()
+                    : null,
+
+            trayectoria
+    );
+}
+
 }
