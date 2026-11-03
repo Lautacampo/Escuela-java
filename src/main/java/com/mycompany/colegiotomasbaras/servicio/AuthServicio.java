@@ -61,13 +61,19 @@ public class AuthServicio {
 
         String hash = passwordEncoder.encode(password);
 
+      
         Usuario nuevoUsuario = new Usuario();
+
         nuevoUsuario.setNombre(nombre);
         nuevoUsuario.setApellido(apellido);
         nuevoUsuario.setEmail(email);
         nuevoUsuario.setContrahash(hash);
         nuevoUsuario.setActivo(true);
 
+         // Asociar el usuario con su rol
+        nuevoUsuario.setRol(rolEncontrado);
+
         return usuarioDAO.guardar(nuevoUsuario);
+
     }
 }
