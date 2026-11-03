@@ -84,5 +84,5 @@ public class AlumnoDAOImpl implements AlumnoDAO {
         
         return entityManager.createQuery(jpql, Alumno.class).getResultList();
     }
-    
+       
 }

@@ -23,5 +23,6 @@ public interface AlumnoDAO {
     
     List<Alumno> obtenerTodos();
     
+    
 
 }
