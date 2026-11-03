@@ -6,7 +6,7 @@ import com.mycompany.colegiotomasbaras.modelo.academico.CursadoModulo;
 import com.mycompany.colegiotomasbaras.modelo.enums.EstadoAcademico;
 import com.mycompany.colegiotomasbaras.modelo.personas.Alumno;
 import com.mycompany.colegiotomasbaras.servicio.AlumnoServicio;
-
+import com.mycompany.colegiotomasbaras.dto.FichaAlumnoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -176,6 +176,16 @@ public class AlumnoControlador {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(aResumen(nuevoAlumno));
+    }
+    
+     // CASO DE USO: CONSULTAR ALUMNO
+    @GetMapping("/{id}")
+    public ResponseEntity<FichaAlumnoDTO> consultarAlumno(
+            @PathVariable("id") Long id) {
+
+        FichaAlumnoDTO ficha = alumnoService.consultarAlumno(id);
+
+        return ResponseEntity.ok(ficha);
     }
 
     // CASO DE USO: MATRICULAR ALUMNO
