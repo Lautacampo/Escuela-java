@@ -79,6 +79,12 @@ public class SeguridadConfig {
                     "/api/cursos",
                     "/api/cursos/**"
                 ).hasAnyRole("DIRECTIVO", "DOCENTE")
+                    
+                    .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/asistencias",
+                    "/api/asistencias/**"
+                ).hasAnyRole("DIRECTIVO")
 
                 .requestMatchers(
                     HttpMethod.POST,

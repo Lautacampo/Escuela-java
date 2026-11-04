@@ -65,7 +65,7 @@ public class AlumnoControlador {
             String lugarNacimiento,
             String domicilio,
             String telefono,
-            String correoElectronico,
+            String email,
             String telefonoEmergencia,
             Integer cantidadHijos,
             String situacionLaboral,

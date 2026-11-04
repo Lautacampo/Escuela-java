@@ -29,7 +29,7 @@ public class JwtConfig {
 
     @Bean
     public SecretKey jwtSecretKey(
-            @Value("${APP_JWT_SECRET}") String secreto) {
+            @Value("${APP_JWT_SECRET:esta-es-una-clave-secreta-de-prueba-con-mas-de-32-caracteres}") String secreto) { 
 
         byte[] bytes = secreto.getBytes(
                 StandardCharsets.UTF_8
