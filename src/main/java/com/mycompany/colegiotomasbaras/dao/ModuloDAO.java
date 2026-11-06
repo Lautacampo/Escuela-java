@@ -4,6 +4,7 @@
  */
 package com.mycompany.colegiotomasbaras.dao;
 import com.mycompany.colegiotomasbaras.modelo.academico.Modulo;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,5 +13,5 @@ import java.util.Optional;
  */
 public interface ModuloDAO {
      Optional<Modulo> buscarPorId(Long id);
-
+     List<Modulo> obtenerTodos();
 }

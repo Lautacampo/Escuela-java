@@ -92,6 +92,11 @@ public class SeguridadConfig {
                     "/api/alumnos/*/matricular",
                     "/api/evaluaciones-modulo"
                 ).hasRole("DIRECTIVO")
+                    
+                .requestMatchers(HttpMethod.GET,"/api/calificaciones/**").hasAnyRole("DIRECTIVO", "DOCENTE")
+
+                .requestMatchers(HttpMethod.PUT,"/api/calificaciones").hasAnyRole("DIRECTIVO", "DOCENTE")
+                    
 
                 .anyRequest().denyAll()
             )

@@ -6,6 +6,7 @@ import com.mycompany.colegiotomasbaras.modelo.academico.Modulo;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import java.util.List;
 
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
@@ -25,4 +26,11 @@ public class ModuloDAOImpl implements ModuloDAO {
 
         return Optional.ofNullable(modulo);
     }
+    
+    
+    @Override
+    public List<Modulo> obtenerTodos() {
+    return entityManager.createQuery("select m from Modulo m order by m.id", Modulo.class)
+             .getResultList();
+}
 }
