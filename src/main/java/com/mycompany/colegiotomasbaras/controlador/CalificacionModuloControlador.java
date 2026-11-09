@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/calificaciones/modulos")
+@RequestMapping("/api/modulos")
 @CrossOrigin(origins="*")
 public class CalificacionModuloControlador {
 

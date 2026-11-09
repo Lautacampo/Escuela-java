@@ -98,6 +98,10 @@ public class SeguridadConfig {
                 .requestMatchers(HttpMethod.PUT,"/api/calificaciones").hasAnyRole("DIRECTIVO", "DOCENTE")
                 
                 
+                .requestMatchers(HttpMethod.GET, "/api/modulos", "/api/modulos/**").hasAnyRole("DIRECTIVO", "DOCENTE")
+                    
+                    
+                    
                 .requestMatchers(
                     HttpMethod.GET,
                     "/api/materias",

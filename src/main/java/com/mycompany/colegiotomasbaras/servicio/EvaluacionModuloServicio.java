@@ -84,6 +84,22 @@ public class EvaluacionModuloServicio {
                     "El modulo debe ser recursado"
             );
         }
+        
+        //verificacion de que todas las materias esten aprobadas
+        List<String> pendientes = evaluacionDAO.materiasNoAprobadas(cursada.getId());
+        if(!pendientes.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"No se puede calificar el modulo. Materias sin aprobas: "+String.join(", ", pendientes)
+            
+            );
+                    
+        
+        
+        }
+        
+        
+        
+        
+        
 
         // 3. Consultar evaluaciones anteriores.
 

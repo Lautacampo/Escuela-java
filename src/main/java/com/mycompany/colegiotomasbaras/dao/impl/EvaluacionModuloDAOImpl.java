@@ -47,4 +47,25 @@ public class EvaluacionModuloDAOImpl implements EvaluacionModuloDAO {
         entityManager.persist(evaluacion);
         return evaluacion;
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<String> materiasNoAprobadas(Long idCursadaModulo) {
+    return entityManager.createNativeQuery("""
+        SELECT ma.nombre
+          FROM cursada_modulo cm
+          JOIN materia_modulo mm ON mm.modulo_id = cm.modulo_id
+          JOIN materia ma ON ma.id = mm.materia_id
+         WHERE cm.id = :id
+           AND NOT EXISTS (
+               SELECT 1 FROM calificacion c
+                WHERE c.cursada_modulo_id = cm.id
+                  AND c.materia_id = mm.materia_id
+                  AND c.estado = 'Aprobado')
+         ORDER BY ma.nombre
+        """)
+        .setParameter("id", idCursadaModulo)
+        .getResultList();
+}
+    
 }

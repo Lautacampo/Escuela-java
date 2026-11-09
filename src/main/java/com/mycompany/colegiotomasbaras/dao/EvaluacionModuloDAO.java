@@ -19,4 +19,6 @@ public interface EvaluacionModuloDAO {
     EvaluacionModulo guardarNueva(
             EvaluacionModulo evaluacion
     );
+    
+    List<String> materiasNoAprobadas(Long idCursadaModulo);
 }
