@@ -35,12 +35,11 @@ public class MateriaControlador {
     }
     
     // CASO DE USO: CONSULTAR MATERIA (año es opcional)
-    @GetMapping
-    public ResponseEntity<FichaMateriaDTO> consultarMateria(
-            @PathVariable("id") Long id,
-            @RequestParam(value = "anio", required = false)
-            Integer anio) {
-        return ResponseEntity.ok(
-            materiaService.consultarMateria(id, anio));
-    }
+ @GetMapping("/{id}")
+public ResponseEntity<FichaMateriaDTO> consultarMateria(
+        @PathVariable("id") Long id,
+        @RequestParam(value = "anio", required = false) Integer anio) {
+
+    return ResponseEntity.ok(materiaService.consultarMateria(id, anio));
+}
 }
