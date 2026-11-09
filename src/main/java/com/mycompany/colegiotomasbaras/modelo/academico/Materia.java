@@ -25,7 +25,17 @@ public class Materia {
 
     @Column(nullable = false, length = 120)
     private String nombre;
-
+    
+    // Contenidos de la materia
+    @ElementCollection
+    @CollectionTable(
+        name = "materia_contenido",
+        joinColumns = @JoinColumn(name = "materia_id")
+    )
+    @OrderColumn(name = "orden")
+    @Column(name = "contenido", nullable = false, length = 200)
+    private List<String> contenidos = new ArrayList<>();
+    
     // Asociacion con Modulo
 
     @ManyToMany(mappedBy = "materias")
@@ -67,6 +77,14 @@ public void setCalificaciones(
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public List<String> getContenidos() {
+        return contenidos;
+    }
+    
+    public void setContenidos(List<String> contenidos) {
+        this.contenidos = contenidos;
     }
 
     public List<Modulo> getModulos() {

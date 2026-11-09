@@ -96,8 +96,14 @@ public class SeguridadConfig {
                 .requestMatchers(HttpMethod.GET,"/api/calificaciones/**").hasAnyRole("DIRECTIVO", "DOCENTE")
 
                 .requestMatchers(HttpMethod.PUT,"/api/calificaciones").hasAnyRole("DIRECTIVO", "DOCENTE")
+                
+                
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/materias",
+                    "/api/materias/**"
+                ).hasAnyRole("DIRECTIVO", "DOCENTE")
                     
-
                 .anyRequest().denyAll()
             )
 
