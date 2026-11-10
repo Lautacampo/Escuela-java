@@ -142,9 +142,6 @@ Si se usa la terminal de PostgreSQL, el programa `psql.exe` suele encontrarse en
 
 ## 4. Restaurar la base de datos (paso indispensable)
 
-**Los profesores necesitan una base preparada con datos de demostración.** Una base vacía no permite mostrar alumnos, materias ni iniciar sesión si no existe un usuario. El respaldo que debe acompañar esta entrega se llama aquí `base_datos\colegio_demo.backup`; **este archivo todavía debe ser generado y aportado por el equipo** desde la base con la que realmente probaron Java.
-
-**No usar `Escuela-main\database\schema.sql` como sustituto.** Ese archivo es un esquema antiguo (sin filas de datos y sin las tablas `roles` y `usuarios` del login Java). El `src\main\resources\schema.sql` del último proyecto Java está vacío. La base válida debe coincidir con las entidades JPA y las pruebas actuales de Spring Boot.
 
 ### Opción A. Restauración desde pgAdmin (recomendada para quien no usa terminal)
 
