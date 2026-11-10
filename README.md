@@ -436,7 +436,7 @@ Para revisar errores del frontend: navegador → tecla **F12** → pestañas **C
 
 ---
 
-## 12. Preparación de la entrega por parte del equipo (antes de darla a los profesores)
+## 12. Preparación de la entrega por parte del equipo 
 
 Este apartado corresponde a los autores del software, no a la instalación del profesor.
 
