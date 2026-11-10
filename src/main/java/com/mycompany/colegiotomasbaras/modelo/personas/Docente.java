@@ -34,11 +34,11 @@ public class Docente extends Personal {
 
     @ManyToMany
     @JoinTable(
-        name = "docente_aula",
+        name = "docente_curso",
         joinColumns =
             @JoinColumn(name = "docente_id"),
         inverseJoinColumns =
-            @JoinColumn(name = "aula_id")
+            @JoinColumn(name = "curso_id")
     )
     private List<Curso> cursos = new ArrayList<>();
 

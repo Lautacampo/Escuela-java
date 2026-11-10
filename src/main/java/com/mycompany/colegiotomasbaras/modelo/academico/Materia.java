@@ -33,8 +33,7 @@ public class Materia {
         joinColumns = @JoinColumn(name = "materia_id")
     )
     @OrderColumn(name = "orden")
-    @Column(name = "contenido", nullable = false, length = 200)
-    private List<String> contenidos = new ArrayList<>();
+    private List<ContenidoMateria> contenidos = new ArrayList<>();
     
     // Asociacion con Modulo
 
@@ -79,12 +78,8 @@ public void setCalificaciones(
         this.nombre = nombre;
     }
     
-    public List<String> getContenidos() {
+    public List<ContenidoMateria> getContenidos() {
         return contenidos;
-    }
-    
-    public void setContenidos(List<String> contenidos) {
-        this.contenidos = contenidos;
     }
 
     public List<Modulo> getModulos() {

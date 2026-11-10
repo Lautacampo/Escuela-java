@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.colegiotomasbaras.servicio;
 
 import com.mycompany.colegiotomasbaras.dao.MateriaDAO;
 import com.mycompany.colegiotomasbaras.dto.AnioMateriasDTO;
 import com.mycompany.colegiotomasbaras.dto.FichaMateriaDTO;
+import com.mycompany.colegiotomasbaras.modelo.academico.ContenidoMateria;
 import com.mycompany.colegiotomasbaras.modelo.academico.Curso;
 import com.mycompany.colegiotomasbaras.modelo.academico.Materia;
 import com.mycompany.colegiotomasbaras.modelo.academico.Modulo;
@@ -19,11 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-/**
- *
- * @author Usuario
- */
 
 @Service
 public class MateriaServicio {
@@ -127,10 +119,15 @@ public class MateriaServicio {
                 .filter(m -> anio == null || !m.divisiones().isEmpty())
                 .toList();
         
+        List<String> contenidos = materia.getContenidos().stream()
+                .filter(c -> anio == null || anio.equals(c.getAnioCurso()))
+                .map(ContenidoMateria::getDescripcion)
+                .toList();
+        
         return new FichaMateriaDTO(
             materia.getId(),
             materia.getNombre(),
-            List.copyOf(materia.getContenidos()),
+            contenidos,
             modulos);
     }
 }
